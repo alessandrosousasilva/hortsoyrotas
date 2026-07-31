@@ -7,13 +7,11 @@ export default function App() {
   const [filtroOrigem, setFiltroOrigem] = useState('');
   const [filtroDestino, setFiltroDestino] = useState('');
   
-  // Estado do Modo Escuro (Puxa da memória se o motorista já escolheu antes)
   const [isDark, setIsDark] = useState(() => {
     const temaSalvo = localStorage.getItem('@hortsoy-tema');
     return temaSalvo === 'escuro';
   });
 
-  // Aplica a classe 'dark' no HTML e salva a preferência com animação suave
   useEffect(() => {
     if (isDark) {
       document.documentElement.classList.add('dark');
@@ -172,76 +170,59 @@ export default function App() {
   }, [rotas]);
 
   return (
-    // Fundo Principal - Fica escuro suavemente
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-500 pb-10 font-sans text-gray-800 dark:text-gray-100">
       
-      {/* HEADER */}
-      <header className="bg-white dark:bg-gray-800 px-3 py-3 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10 flex justify-between items-center transition-colors duration-500">
-        <div className="flex items-center">
-          <img src="/logo-hortsoy.png" alt="HortSoy" className={`h-6 object-contain transition-all duration-500 ${isDark ? 'brightness-[200%] hue-rotate-15' : ''}`} />
-        </div>
+      {/* PAINEL SUPERIOR FIXO (Header + Filtros) */}
+      <div className="sticky top-0 z-20 w-full bg-gray-100 dark:bg-gray-900 transition-colors duration-500 shadow-md">
         
-        <div className="flex items-center gap-2.5">
-          {rotas.length > 0 && (
-            <div className="text-right flex gap-2.5">
-              <div className="border-r border-gray-200 dark:border-gray-600 pr-2.5 transition-colors duration-500">
-                <p className="text-[9px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-wider leading-none mb-0.5">Peso Total</p>
-                <p className="text-sm font-black text-gray-800 dark:text-gray-100 leading-none transition-colors duration-500">{pesoTotalGlobal.toLocaleString('pt-BR')} kg</p>
-              </div>
-              
-              <div>
-                <p className="text-[9px] text-amber-600 dark:text-amber-500 font-bold uppercase tracking-wider leading-none mb-0.5">Caminhão</p>
-                <p className="text-sm font-extrabold text-gray-800 dark:text-gray-100 leading-none text-center transition-colors duration-500">{progresso.carregados}</p>
-              </div>
-              <div>
-                <p className="text-[9px] text-emerald-600 dark:text-emerald-500 font-bold uppercase tracking-wider leading-none mb-0.5">Entregues</p>
-                <p className="text-sm font-extrabold text-gray-800 dark:text-gray-100 leading-none text-center transition-colors duration-500">{progresso.entregues}/{progresso.total}</p>
-              </div>
-            </div>
-          )}
-
-          {/* Botão de Modo Escuro/Claro */}
-          <button 
-            onClick={() => setIsDark(!isDark)} 
-            className="text-gray-400 dark:text-gray-500 hover:text-emerald-500 dark:hover:text-emerald-400 active:scale-95 transition-all p-1"
-            title="Alternar Modo Escuro"
-          >
-            {isDark ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
-
-          {/* Botão de Limpar (Apenas se houver rotas) */}
-          {rotas.length > 0 && (
-            <button 
-              onClick={limparRota} 
-              className="text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 active:scale-95 transition-all p-1"
-            >
-              <Trash2 size={18} />
-            </button>
-          )}
-        </div>
-      </header>
-
-      <main className="p-2.5 max-w-lg mx-auto">
-        {rotas.length === 0 ? (
-          
-          <div className="mt-8 flex flex-col items-center justify-center p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 transition-colors duration-500">
-            <div className="bg-emerald-50 dark:bg-emerald-900/30 p-4 rounded-full mb-4 transition-colors duration-500">
-              <UploadCloud size={40} className="text-emerald-600 dark:text-emerald-400" />
-            </div>
-            <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-1 transition-colors duration-500">Painel Logístico</h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400 text-center mb-6 transition-colors duration-500">
-              Selecione a planilha de rotas para carregar as entregas.
-            </p>
-            <label className="bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold shadow-md shadow-emerald-600/30 w-full text-center text-sm cursor-pointer hover:bg-emerald-700 active:scale-95 transition-all duration-200">
-              Carregar Planilha
-              <input type="file" accept=".xlsx, .xls" className="hidden" onChange={handleFileUpload} />
-            </label>
+        {/* HEADER */}
+        <header className="bg-white dark:bg-gray-800 px-3 py-3 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center transition-colors duration-500">
+          <div className="flex items-center">
+            {/* Logo aumentada (h-8) */}
+            <img src="/logo-hortsoy.png" alt="HortSoy" className={`h-8 object-contain transition-all duration-500 ${isDark ? 'brightness-[200%] hue-rotate-15' : ''}`} />
           </div>
           
-        ) : (
-          <div className="space-y-3">
-            
-            {/* FILTROS */}
+          <div className="flex items-center gap-2.5">
+            {rotas.length > 0 && (
+              <div className="text-right flex gap-2.5">
+                <div className="border-r border-gray-200 dark:border-gray-600 pr-2.5 transition-colors duration-500">
+                  <p className="text-[9px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-wider leading-none mb-0.5">Peso Total</p>
+                  <p className="text-sm font-black text-gray-800 dark:text-gray-100 leading-none transition-colors duration-500">{pesoTotalGlobal.toLocaleString('pt-BR')} kg</p>
+                </div>
+                
+                <div>
+                  <p className="text-[9px] text-amber-600 dark:text-amber-500 font-bold uppercase tracking-wider leading-none mb-0.5">Caminhão</p>
+                  <p className="text-sm font-extrabold text-gray-800 dark:text-gray-100 leading-none text-center transition-colors duration-500">{progresso.carregados}</p>
+                </div>
+                <div>
+                  <p className="text-[9px] text-emerald-600 dark:text-emerald-500 font-bold uppercase tracking-wider leading-none mb-0.5">Entregues</p>
+                  <p className="text-sm font-extrabold text-gray-800 dark:text-gray-100 leading-none text-center transition-colors duration-500">{progresso.entregues}/{progresso.total}</p>
+                </div>
+              </div>
+            )}
+
+            <button 
+              onClick={() => setIsDark(!isDark)} 
+              className="text-gray-400 dark:text-gray-500 hover:text-emerald-500 dark:hover:text-emerald-400 active:scale-95 transition-all p-1"
+              title="Alternar Modo Escuro"
+            >
+              {isDark ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+
+            {rotas.length > 0 && (
+              <button 
+                onClick={limparRota} 
+                className="text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 active:scale-95 transition-all p-1"
+              >
+                <Trash2 size={18} />
+              </button>
+            )}
+          </div>
+        </header>
+
+        {/* FILTROS (Dentro do bloco fixo) */}
+        {rotas.length > 0 && (
+          <div className="px-2.5 pt-2.5 pb-3 max-w-lg mx-auto">
             <div className="bg-white dark:bg-gray-800 p-2.5 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col gap-2.5 transition-colors duration-500">
               <div className="grid grid-cols-2 gap-2.5">
                 <div>
@@ -277,100 +258,117 @@ export default function App() {
                 {(!filtroOrigem && !filtroDestino) ? 'Exportar Lista Original Completa' : 'Exportar Lista para Separação'}
               </button>
             </div>
+          </div>
+        )}
+      </div>
 
-            {/* LISTA DE ROTAS */}
-            <div className="flex flex-col gap-3">
-              {rotasAgrupadas.map((grupo) => (
-                <div key={grupo.idGrupo} className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden transition-colors duration-500">
-                  
-                  <div className="bg-emerald-50 dark:bg-emerald-900/20 p-2.5 border-b border-emerald-100 dark:border-emerald-800/30 flex items-center justify-between transition-colors duration-500">
-                    <div className="flex items-center gap-1.5 text-xs font-extrabold text-gray-700 dark:text-gray-200">
-                      <MapPin size={16} className="text-emerald-600 dark:text-emerald-500 shrink-0" />
-                      <span className="truncate max-w-[100px]">{grupo.origem}</span>
-                      <span className="text-emerald-300 dark:text-emerald-700 font-normal">➔</span>
-                      <span className="truncate max-w-[100px] text-emerald-800 dark:text-emerald-400">{grupo.destino}</span>
-                    </div>
-                    
-                    <div className="flex items-center gap-1">
-                      <span className="flex items-center gap-0.5 text-[10px] font-bold text-emerald-800 dark:text-emerald-200 bg-emerald-200/50 dark:bg-emerald-800/50 px-2 py-0.5 rounded-full whitespace-nowrap transition-colors duration-500">
-                        <Weight size={10} />
-                        {grupo.pesoTotalTrecho.toLocaleString('pt-BR')} kg
-                      </span>
-                      <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-800 px-2 py-0.5 rounded-full whitespace-nowrap transition-colors duration-500">
-                        {grupo.itens.length} {grupo.itens.length > 1 ? 'itens' : 'item'}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col">
-                    {grupo.itens.map((item) => (
-                      <div 
-                        key={item.id} 
-                        className={`p-2.5 border-b border-gray-100 dark:border-gray-700 last:border-none flex justify-between items-center gap-2 transition-colors duration-500
-                          ${item.status === 'carregado' ? 'bg-amber-50/60 dark:bg-amber-900/20' : ''} 
-                          ${item.status === 'entregue' ? 'bg-gray-50/80 dark:bg-gray-800/80 grayscale-[40%]' : ''}`}
-                      >
-                        <div className="flex-1 min-w-0 flex flex-col justify-center">
-                          <div className="flex items-start gap-1.5">
-                            <span className={`font-black text-xs ${item.status === 'entregue' ? 'text-gray-400 dark:text-gray-600' : 'text-emerald-600 dark:text-emerald-400'}`}>
-                              {item['QTD.']}x
-                            </span>
-                            <h3 className={`font-bold text-[11px] leading-tight truncate ${item.status === 'entregue' ? 'text-gray-400 dark:text-gray-600 line-through' : 'text-gray-800 dark:text-gray-200'}`}>
-                              {item['PRODUTO']}
-                            </h3>
-                          </div>
-                          
-                          {item['OBS'] && String(item['OBS']).trim() !== '' && (
-                            <div className="mt-1 flex">
-                              <div className="text-[9px] font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/40 px-1 py-0.5 rounded inline-flex items-center gap-1 border border-amber-100 dark:border-amber-800/50">
-                                <AlertCircle size={10} className="shrink-0" />
-                                <span className="truncate max-w-[150px] uppercase">{item['OBS']}</span>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-
-                        <div className="shrink-0 flex items-center">
-                          {item.status === 'pendente' && (
-                            <button 
-                              onClick={() => alterarStatus(item.id, 'carregado')}
-                              className="flex items-center gap-1 text-[10px] font-bold text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/50 px-2.5 py-1.5 rounded-md active:scale-95 transition-transform"
-                            >
-                              <Package size={12} /> Pegar
-                            </button>
-                          )}
-                          
-                          {item.status === 'carregado' && (
-                            <button 
-                              onClick={() => alterarStatus(item.id, 'entregue')}
-                              className="flex items-center gap-1 text-[10px] font-bold text-white bg-emerald-500 dark:bg-emerald-600 px-2.5 py-1.5 rounded-md active:scale-95 transition-transform shadow-sm"
-                            >
-                              <CheckCircle2 size={12} /> Entregar
-                            </button>
-                          )}
-
-                          {item.status === 'entregue' && (
-                            <button 
-                              onClick={() => alterarStatus(item.id, 'carregado')}
-                              className="text-gray-400 dark:text-gray-500 p-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md active:scale-95 transition-transform hover:bg-gray-50 dark:hover:bg-gray-700"
-                              title="Desfazer entrega"
-                            >
-                              <Undo2 size={12} />
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-              
-              {rotasAgrupadas.length === 0 && (
-                <div className="text-center p-6 text-sm font-medium text-gray-400 dark:text-gray-500 bg-white dark:bg-gray-800 rounded-xl border border-dashed border-gray-200 dark:border-gray-700 mt-2 transition-colors duration-500">
-                  Nenhuma carga encontrada para este trajeto.
-                </div>
-              )}
+      <main className="p-2.5 max-w-lg mx-auto">
+        {rotas.length === 0 ? (
+          <div className="mt-8 flex flex-col items-center justify-center p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 transition-colors duration-500">
+            <div className="bg-emerald-50 dark:bg-emerald-900/30 p-4 rounded-full mb-4 transition-colors duration-500">
+              <UploadCloud size={40} className="text-emerald-600 dark:text-emerald-400" />
             </div>
+            <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-1 transition-colors duration-500">Painel Logístico</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 text-center mb-6 transition-colors duration-500">
+              Selecione a planilha de rotas para carregar as entregas.
+            </p>
+            <label className="bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold shadow-md shadow-emerald-600/30 w-full text-center text-sm cursor-pointer hover:bg-emerald-700 active:scale-95 transition-all duration-200">
+              Carregar Planilha
+              <input type="file" accept=".xlsx, .xls" className="hidden" onChange={handleFileUpload} />
+            </label>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-3">
+            {rotasAgrupadas.map((grupo) => (
+              <div key={grupo.idGrupo} className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden transition-colors duration-500">
+                
+                <div className="bg-emerald-50 dark:bg-emerald-900/20 p-2.5 border-b border-emerald-100 dark:border-emerald-800/30 flex items-center justify-between transition-colors duration-500">
+                  <div className="flex items-center gap-1.5 text-xs font-extrabold text-gray-700 dark:text-gray-200">
+                    <MapPin size={16} className="text-emerald-600 dark:text-emerald-500 shrink-0" />
+                    <span className="truncate max-w-[100px]">{grupo.origem}</span>
+                    <span className="text-emerald-300 dark:text-emerald-700 font-normal">➔</span>
+                    <span className="truncate max-w-[100px] text-emerald-800 dark:text-emerald-400">{grupo.destino}</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-1">
+                    <span className="flex items-center gap-0.5 text-[10px] font-bold text-emerald-800 dark:text-emerald-200 bg-emerald-200/50 dark:bg-emerald-800/50 px-2 py-0.5 rounded-full whitespace-nowrap transition-colors duration-500">
+                      <Weight size={10} />
+                      {grupo.pesoTotalTrecho.toLocaleString('pt-BR')} kg
+                    </span>
+                    <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-800 px-2 py-0.5 rounded-full whitespace-nowrap transition-colors duration-500">
+                      {grupo.itens.length} {grupo.itens.length > 1 ? 'itens' : 'item'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col">
+                  {grupo.itens.map((item) => (
+                    <div 
+                      key={item.id} 
+                      className={`p-2.5 border-b border-gray-100 dark:border-gray-700 last:border-none flex justify-between items-center gap-2 transition-colors duration-500
+                        ${item.status === 'carregado' ? 'bg-amber-50/60 dark:bg-amber-900/20' : ''} 
+                        ${item.status === 'entregue' ? 'bg-gray-50/80 dark:bg-gray-800/80 grayscale-[40%]' : ''}`}
+                    >
+                      <div className="flex-1 min-w-0 flex flex-col justify-center">
+                        <div className="flex items-start gap-1.5">
+                          <span className={`font-black text-xs ${item.status === 'entregue' ? 'text-gray-400 dark:text-gray-600' : 'text-emerald-600 dark:text-emerald-400'}`}>
+                            {item['QTD.']}x
+                          </span>
+                          <h3 className={`font-bold text-[11px] leading-tight truncate ${item.status === 'entregue' ? 'text-gray-400 dark:text-gray-600 line-through' : 'text-gray-800 dark:text-gray-200'}`}>
+                            {item['PRODUTO']}
+                          </h3>
+                        </div>
+                        
+                        {item['OBS'] && String(item['OBS']).trim() !== '' && (
+                          <div className="mt-1 flex">
+                            <div className="text-[9px] font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/40 px-1 py-0.5 rounded inline-flex items-center gap-1 border border-amber-100 dark:border-amber-800/50">
+                              <AlertCircle size={10} className="shrink-0" />
+                              <span className="truncate max-w-[150px] uppercase">{item['OBS']}</span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="shrink-0 flex items-center">
+                        {item.status === 'pendente' && (
+                          <button 
+                            onClick={() => alterarStatus(item.id, 'carregado')}
+                            className="flex items-center gap-1 text-[10px] font-bold text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/50 px-2.5 py-1.5 rounded-md active:scale-95 transition-transform"
+                          >
+                            <Package size={12} /> Pegar
+                          </button>
+                        )}
+                        
+                        {item.status === 'carregado' && (
+                          <button 
+                            onClick={() => alterarStatus(item.id, 'entregue')}
+                            className="flex items-center gap-1 text-[10px] font-bold text-white bg-emerald-500 dark:bg-emerald-600 px-2.5 py-1.5 rounded-md active:scale-95 transition-transform shadow-sm"
+                          >
+                            <CheckCircle2 size={12} /> Entregar
+                          </button>
+                        )}
+
+                        {item.status === 'entregue' && (
+                          <button 
+                            onClick={() => alterarStatus(item.id, 'carregado')}
+                            className="text-gray-400 dark:text-gray-500 p-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md active:scale-95 transition-transform hover:bg-gray-50 dark:hover:bg-gray-700"
+                            title="Desfazer entrega"
+                          >
+                            <Undo2 size={12} />
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+            
+            {rotasAgrupadas.length === 0 && (
+              <div className="text-center p-6 text-sm font-medium text-gray-400 dark:text-gray-500 bg-white dark:bg-gray-800 rounded-xl border border-dashed border-gray-200 dark:border-gray-700 mt-2 transition-colors duration-500">
+                Nenhuma carga encontrada para este trajeto.
+              </div>
+            )}
           </div>
         )}
       </main>

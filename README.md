@@ -1,16 +1,20 @@
-# React + Vite
+# 🚚 Painel Logístico - HortSoy
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+![Tech Stack](https://img.shields.io/badge/tech-React%20%7C%20Vite%20%7C%20Tailwind%20CSS%20%7C%20SheetJS-007acc?style=flat)
 
-Currently, two official plugins are available:
+O **Painel Logístico HortSoy** é uma aplicação Web (PWA) desenvolvida para digitalizar e simplificar a operação de movimetações da Hortsoy
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+O intuito do projeto é eliminar o uso de papel. O motorista importa a planilha de cargas diretamente do celular e o sistema agrupa automaticamente os produtos por trecho (Origem ➔ Destino). A partir daí, a equipe pode realizar o checklist de carregamento e entrega, além de gerar listas de separação dinâmicas para as filiais.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ Recursos Principais
 
-## Expanding the Oxlint configuration
+- 📊 **Leitura Instantânea:** Upload de rotas diretamente de arquivos `.xlsx`.
+- 📍 **Agrupamento Inteligente:** Cargas agrupadas por unidade de origem e destino com cálculo automático de peso do trecho.
+- ✅ **Checklist de Viagem:** Controle interativo de status (`Pegar` ➔ `Entregar`) para cada produto.
+- 💾 **Funcionamento Offline:** Dados e progresso da viagem salvos automaticamente na memória do celular (`localStorage`).
+- 📥 **Exportação Inteligente:** Geração de arquivo Excel (Lista Original Completa ou Lista Resumida para Separação na unidade).
+- 🌙 **Modo Escuro:** Alternância de tema claro/escuro para conforto visual.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+---
