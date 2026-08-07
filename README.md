@@ -18,3 +18,15 @@ O intuito do projeto é eliminar o uso de papel. O motorista importa a planilha 
 - 🌙 **Modo Escuro:** Alternância de tema claro/escuro para conforto visual.
 
 ---
+
+## 📋 Modelo da Planilha (Excel)
+
+Para que a leitura de dados funcione corretamente, o arquivo importado (`.xlsx` ou `.xls`) precisa obrigatoriamente conter os seguintes cabeçalhos na primeira linha:
+
+| PRODUTO | QTD. | PESO KG/L | FILIAL ORIGEM | FILIAL DESTINO | OBS |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Ex: ARIETE 100 EC | 19 | 99,75 | ARAXÁ | BAMBUÍ | nf emitida |
+
+> ⚠️ **Atenção:** O sistema lê os nomes exatos das colunas. Evite espaços em branco sobrando no início ou no final dos cabeçalhos. A coluna `OBS` é opcional em seu preenchimento, mas o cabeçalho deve existir.
+
+---
