@@ -2,9 +2,9 @@
 
 ![Tech Stack](https://img.shields.io/badge/tech-React%20%7C%20Vite%20%7C%20Tailwind%20CSS%20%7C%20SheetJS-007acc?style=flat)
 
-O **Painel Logístico HortSoy** é uma aplicação Web (PWA) desenvolvida para digitalizar e simplificar a operação de movimetações da Hortsoy
+O **Painel Logístico HortSoy** é uma aplicação Web (PWA) desenvolvida para digitalizar e simplificar a operação de movimetações.
 
-O intuito do projeto é eliminar o uso de papel. O motorista importa a planilha de cargas diretamente do celular e o sistema agrupa automaticamente os produtos por trecho (Origem ➔ Destino). A partir daí, a equipe pode realizar o checklist de carregamento e entrega, além de gerar listas de separação dinâmicas para as filiais.
+O intuito do projeto é eliminar o uso de papel. O motorista importa a planilha de cargas diretamente do celular e o sistema agrupa automaticamente os produtos por trecho (Origem ➔ Destino). A partir daí, pode realizar o checklist de carregamento e entrega, além de gerar listas de separação dinâmicas para cada unidade.
 
 ---
 
@@ -21,12 +21,12 @@ O intuito do projeto é eliminar o uso de papel. O motorista importa a planilha 
 
 ## 📋 Modelo da Planilha (Excel)
 
-Para que a leitura de dados funcione corretamente, o arquivo importado (`.xlsx` ou `.xls`) precisa obrigatoriamente conter os seguintes cabeçalhos na primeira linha:
+Para que a leitura de dados funcione corretamente, o arquivo importado (`.xlsx` ou `.xls`) precisa conter os seguintes cabeçalhos na primeira linha:
 
-| PRODUTO | QTD. | PESO KG/L | FILIAL ORIGEM | FILIAL DESTINO | OBS |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| Ex: ARIETE 100 EC | 19 | 99,75 | ARAXÁ | BAMBUÍ | nf emitida |
+| PRODUTO           | QTD. | PESO KG/L | FILIAL ORIGEM | FILIAL DESTINO | OBS        |
+| :---------------- | :--- | :-------- | :------------ | :------------- | :--------- |
+| Ex: ARIETE 100 EC | 19   | 99,75     | ARAXÁ         | BAMBUÍ         | nf emitida |
 
-> ⚠️ **Atenção:** O sistema lê os nomes exatos das colunas. Evite espaços em branco sobrando no início ou no final dos cabeçalhos. A coluna `OBS` é opcional em seu preenchimento, mas o cabeçalho deve existir.
+> ⚠️ **Atenção:** O sistema lê os nomes exatos das colunas. A coluna `OBS` é opcional em seu preenchimento, mas o cabeçalho deve existir.
 
 ---
